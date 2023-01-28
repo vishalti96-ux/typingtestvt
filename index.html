@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TypingVT</title>
+<style type="text/css">
+	*{padding: 0;margin: 0;box-sizing: border-box;}
+	.mainDiv{width: 100%;height: 100vh;
+		position: relative;background-color:#3498db; }
+	.centerDiv{
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%,-50%);
+		text-align: center;
+	}
+;
+
+	h1{
+		text-transform: capitalize;
+		text-align: center;
+		margin-bottom: 30px;
+		color:#ecf0f1;
+		text-shadow: 1px 2px 3px #2980b9;
+		font-size: 2.1rem;
+	}
+	h2{text-align: center;}
+	textarea{
+		background-color: #444;
+		box-shadow: 0 0 1px rgba(0,0,0,0.2);
+		border-radius: 10px 10px 0 0;
+		border: 20px solid #34495e;
+		color: white;
+		font-size: 1.3rem;
+	}
+	.mainbtn{
+		padding: 10px 20px;
+		border-radius: 20px;
+		border:5px solid #2980b9;
+		background-color: #ecf0f1;
+		font-size: 1rem;
+	}
+	#msg{
+		text-align: justify;
+	}
+</style>
+</head>
+<body>
+
+	<div class="mainDiv">
+		
+		<div class="centerDiv">
+			<h1>Welcome to Typing Speed Test</h1>
+			<p id ="msg"></p>
+			<br>
+			<textarea id = "mywords" class="myvt" cols="100" rows="10" placeholder="remember, be nice!"></textarea>
+			<br>
+			<button id= "btn" class="mainbtn">Start</button>
+		</div>
+	</div>
+<script type="text/javascript">
+	const setofwords = ["put wash along result heaven happy carve rocket hope skin key whose tap closed cope menu spine mine Greek blind art crop author agent shoot tour pin patch given assure neat remind series scale yes under huh switch brake farm hint him bunch review own enter simply orbit list ratio heart much rose lunch half prison clinic arrest merely offer who circle lie credit blood equal chin top warn cut spend teen hockey hill minor shot come return by matter glance patent behave fire rescue bureau deploy gene can dry flow age far help county parade egg rock handle that convey throw birth column agree globe fully.","large resist file scared reveal squad age pen role flesh plane board poor fist cheer ours church magic total some dinner ballot worth night busy no flower as knock finish child pull meter mask river prayer script shorts long manage medium chain insist blood appeal boom bench fire pillow dying toilet slam beauty online heel Korean tag origin mixed handle openly adjust enemy pasta force end steel money spell tone state alarm rid smooth foster family rebel grin mainly while fourth which staff fail lack hurt jump scale bronze all across arise study garden sight print its fish long easy cheap free when freeze these suburb eight pale reduce below wet camera deal arrow drink crisis campus rape less weed tender desire mind prove vast crawl formal bite test enough mine retail fix warm goal bridge lamp famous solar handle know where excuse entity infant wash column","so five range sense worry run never gifted access spread swing show upper charge jaw bad house alter less shock nearby medal parade purple like streak award charm catch grow gear tall same upset aim web fish loyal former this tunnel sue free aid cargo snap stuff layer over prior across urge fit focus cite deny pride blame relief his mark part call poster daily couch cousin tank sum dealer poem hide frozen rib oak senior steer kill block bow shirt smart soar past check extent band unfold proper praise weak rip market eager deputy cold touch kneel source hurry bulk most cable part murder slope floor event jet weave plenty step voting just hero upset tip mad boot path than peace step cover funny up stage within trim thigh bone widely fear little keep peer out norm secure link upon excuse insert endure also artist hire far his phone carrot trick asset stroke deeply proud softly rush buyer wood act dark bay pick banker more center and/or native bowl sink taste air jungle hunt a county","margin quiet e-mail make hunger league ie corn part mass route chef future flow fuel split preach grasp first civil modest exact profit likely aunt ago sigh rim insect motive fairly sound feed kiss skill plot cake gate highly phase roof build number used strike priest refuge here cute drop assist advice PC flag bull rental CEO ten ring dust carbon editor ground stone gym belly resume range car rocket drown dried plant wheat youth too leave public costly value array one copy course swear hour spare regime half that wisdom two dumb ass jar score gift once salmon ban series pay sick show once sit palace strip study damage sleep sake visit lung gross dad OK drama assess spark strain faith good cook safety since orange bid refer cycle sheet from matter record thirty merit burst save locate pig guitar drum occupy sock empty sister follow circle pay sacred him clerk no flee Mrs circle toe behind pipe can exotic watch pack pastor favor near danger beat deem on end help laugh though claim every name muscle fund import stem "];
+	const msg = document.getElementById("msg");
+	const typeWords = document.getElementById('mywords');
+	const btn = document.getElementById("btn");
+	let startTime , endTime;
+	const playGames = () => {
+		let randomNumber = Math.floor(Math.random()*setofwords.length);
+		msg.innerText = setofwords[randomNumber];
+		let date = new Date();
+		startTime = date.getTime();
+		btn.innerText = "Done";
+	}
+	const endPlay = () =>{
+		let date = new Date;
+		endTime = date.getTime();
+		let totalTime = ((endTime-startTime)/1000);
+		let totalStr = typeWords.value;
+		let wordCount = wordCounter(totalStr);
+
+		let speed = Math.round((wordCount/totalTime)*60);
+		let finalMsg = `You typed total at ${speed} words per minute.`;
+		
+		finalMsg += compareWord(msg.innerText,totalStr);
+
+		msg.innerText= finalMsg;
+
+
+	}
+
+	const compareWord = (str1,str2) => {
+		let words1 = str1.split(" ");
+		let words2 = str2.split(" ");
+		let cnt = 0;
+
+		words1.forEach(function (item,index){
+			if(item == words2[index]){
+				cnt++;
+			}
+		})
+
+		let errorWords = (words1.length - cnt);
+		return (`${cnt} correct out of ${words1.length} words and the total number of error are ${errorWords}.`);
+	}
+	const wordCounter = (str) => {
+		let response = str.split(" ").length;
+		return response;
+
+	}
+	btn.addEventListener('click',function(){
+		if(this.innerText == 'Start'){
+			typeWords.disabled = false;
+			playGames();
+		}else if(this.innerText == "Done"){
+			typeWords.disabled = true;
+			document.querySelector(".myvt").value = " ";
+			btn.innerText = "Start";
+			endPlay();
+		}
+	})
+</script>
+</body>
+</html>
